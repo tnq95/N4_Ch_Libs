@@ -5,8 +5,6 @@ public void onStart() throws Exception
 
 public void onExecute() throws Exception
 {
-  // execute code (set executeOnChange flag on inputs)
-
   BStatusNumeric out1 = getOut1();
   BStatusNumeric out2 = getOut2();
   BStatusNumeric out3 = getOut3();
@@ -24,27 +22,30 @@ public void onExecute() throws Exception
   
   Collections.sort(args);
   
-  int pos1 = searchElement(args, (double)(Val1+0.1));
-  int pos2 = searchElement(args, (double)(Val2+0.2));
-  int pos3 = searchElement(args, (double)(Val3+0.3));
-  int pos4 = searchElement(args, (double)(Val4+0.4));
+  int[] pos = searchElement(args);
   
-  if ((pos1 != -1 ) || (pos2 != -1 ) || (pos3 != -1 )|| (pos4 != -1 ) ){
-      out1.setValue(pos1);
-      out2.setValue(pos2);
-      out3.setValue(pos3);
-      out4.setValue(pos4);
-  } 
+  out1.setValue(pos[0]);
+  out2.setValue(pos[1]);
+  out3.setValue(pos[2]);
+  out4.setValue(pos[3]); 
+ 
 }
 
-public int searchElement(ArrayList<Double> arr, double x) {
-    for(int i = 0; i < arr.size(); i++) {
-       if ((double)arr.get(i) == x)
-         return i;
-    }
-    return -1;
+public int[] searchElement(ArrayList<Double> listInput){
+  int[] arr = new int[listInput.size()];
+  for(int i = 0; i < listInput.size(); i++) {
+     if ((double)listInput.get(i) == (getIn1()+0.1))
+      arr[0] = i;
+     else if ((double)listInput.get(i) == (getIn2()+0.2))
+      arr[1] = i;
+     else if ((double)listInput.get(i) == (getIn3()+0.3))
+      arr[2] = i;
+     else if ((double)listInput.get(i) == (getIn4()+0.4))
+      arr[3] = i;
+      
+  }
+  return arr;
 }
-
 
 public void onStop() throws Exception
 {
