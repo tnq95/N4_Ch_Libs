@@ -8,7 +8,7 @@ public void onExecute() throws Exception
   double offset = 0.1;
   ArrayList<Double> listIn = new ArrayList<Double>();
   ArrayList<BStatusNumeric> listOut = new ArrayList<BStatusNumeric>();
-  
+    
   for (Property prop : this.getComponent().getPropertiesArray()){
      if(prop.getType().equals(BDouble.TYPE)){             // Input -> baja:Double 
          listIn.add(this.getDouble(prop) + offset);
@@ -19,28 +19,24 @@ public void onExecute() throws Exception
      }         
   }
   
-  Collections.sort(listIn);
-  int[] pos = searchElement(listIn);
+  ArrayList<Double> newListIn = new ArrayList<Double>(listIn);
+  Collections.sort(newListIn);
+
+  int[] pos = searchElement(newListIn, listIn);
   for(int i = 0; i < listOut.size(); i++){
     listOut.get(i).setValue(pos[i]);
   }
+    
 }
 
-public int[] searchElement(ArrayList<Double> listInput){
-  int[] arr = new int[listInput.size()];
-  for(int i = 0; i < listInput.size(); i++) {
-     if ((double)listInput.get(i) == (getIn1()+0.1))
-      arr[0] = i;
-     else if ((double)listInput.get(i) == (getIn2()+0.2))
-      arr[1] = i;
-     else if ((double)listInput.get(i) == (getIn3()+0.3))
-      arr[2] = i;
-     else if ((double)listInput.get(i) == (getIn4()+0.4))
-      arr[3] = i;
-      
+public int[] searchElement(ArrayList<Double> listInput1, ArrayList<Double> listInput2){
+  int[] arr = new int[listInput1.size()];
+  for(int i = 0; i < listInput1.size(); i++) {
+    arr[i] = listInput1.indexOf(listInput2.get(i));
   }
   return arr;
 }
+
 
 public void onStop() throws Exception
 {
